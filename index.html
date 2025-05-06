@@ -1,60 +1,119 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <title>比率計算</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>割引後の金額算出 & 比率計算</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      padding: 40px;
-      max-width: 600px;
-      margin: auto;
+      background-color: #f0f8ff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      background: #ffffff;
+      padding: 30px;
+      margin: 10px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      /* width: 300px; */
+    }
+    h2 {
+      text-align: center;
+      color: #333;
     }
     label {
       display: block;
       margin-top: 15px;
+      font-weight: bold;
     }
     input {
       width: 100%;
       padding: 8px;
-      font-size: 1em;
       margin-top: 5px;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 6px;
     }
     button {
       margin-top: 20px;
-      padding: 10px 20px;
-      font-size: 1.1em;
+      width: 100%;
+      padding: 10px;
+      background-color: #0078d4;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
     }
-    .result {
-      margin-top: 30px;
-      font-size: 1.2em;
-      color: green;
+    button:hover {
+      background-color: #005fa3;
     }
-    .error {
-      color: red;
+    .result,.result2 {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 18px;
+      color: #008000;
     }
   </style>
 </head>
 <body>
-  <h1>比率計算</h1>
-  <p>A : B = C : D の関係で、1つだけ空欄を入力せずに残してください。</p>
-  <label>A:</label>
-  <input type="number" id="a" placeholder="数値を入力または空欄に">
+  <div class="container">
 
-  <label>B:</label>
-  <input type="number" id="b" placeholder="数値を入力または空欄に">
+  <div class="container">
+    <h2>割引後の金額算出</h2>
+    <label for="amount">金額（円）:</label>
+    <input type="number" id="amount" placeholder="例: 10000" />
 
-  <label>C:</label>
-  <input type="number" id="c" placeholder="数値を入力または空欄に">
+    <label for="discount">割引率（%）:</label>
+    <input type="number" id="discount" placeholder="例: 20" />
 
-  <label>D:</label>
-  <input type="number" id="d" placeholder="数値を入力または空欄に">
+    <button onclick="calculateDiscount()">計算する</button>
 
-  <button onclick="calculate()">計算する</button>
+    <div class="result" id="result"></div>
+  </div>
 
-  <div class="result" id="result"></div>
+  <div class="container">
+    <h1>比率計算</h1>
+    <p>A : B = C : D の関係で、1つだけ空欄を入力せずに残してください。</p>
+    <label>A:</label>
+    <input type="number" id="a" placeholder="数値を入力または空欄に">
+  
+    <label>B:</label>
+    <input type="number" id="b" placeholder="数値を入力または空欄に">
+  
+    <label>C:</label>
+    <input type="number" id="c" placeholder="数値を入力または空欄に">
+  
+    <label>D:</label>
+    <input type="number" id="d" placeholder="数値を入力または空欄に">
+  
+    <button onclick="calculate()">計算する</button>
+  
+    <div class="result2" id="result2"></div>
+  </div>
+</div>
 
   <script>
+    function calculateDiscount() {
+      const amount = parseFloat(document.getElementById("amount").value);
+      const discount = parseFloat(document.getElementById("discount").value);
+      const resultEl = document.getElementById("result");
+
+      if (isNaN(amount) || isNaN(discount) || amount < 0 || discount < 0 || discount > 100) {
+        resultEl.textContent = "正しい数値を入力してください。";
+        resultEl.style.color = "red";
+        return;
+      }
+
+      const discountedPrice = amount * (1 - discount / 100);
+      resultEl.textContent = `割引後の金額: ¥${discountedPrice.toFixed(2)}`;
+      resultEl.style.color = "#008000";
+    }
+
     function calculate() {
       const a = parseFloat(document.getElementById("a").value);
       const b = parseFloat(document.getElementById("b").value);
@@ -62,7 +121,7 @@
       const d = parseFloat(document.getElementById("d").value);
       const values = [a, b, c, d];
       const emptyIndexes = values.map((v, i) => isNaN(v) ? i : -1).filter(i => i !== -1);
-      const result = document.getElementById("result");
+      const result = document.getElementById("result2");
 
       if (emptyIndexes.length !== 1) {
         result.innerHTML = `<span class="error">空欄は1つだけにしてください。</span>`;
