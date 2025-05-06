@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>比率計算</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 40px;
+      max-width: 600px;
+      margin: auto;
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+    }
+    input {
+      width: 100%;
+      padding: 8px;
+      font-size: 1em;
+      margin-top: 5px;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 1.1em;
+    }
+    .result {
+      margin-top: 30px;
+      font-size: 1.2em;
+      color: green;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <h1>比率計算</h1>
+  <p>A : B = C : D の関係で、1つだけ空欄を入力せずに残してください。</p>
+  <label>A:</label>
+  <input type="number" id="a" placeholder="数値を入力または空欄に">
+
+  <label>B:</label>
+  <input type="number" id="b" placeholder="数値を入力または空欄に">
+
+  <label>C:</label>
+  <input type="number" id="c" placeholder="数値を入力または空欄に">
+
+  <label>D:</label>
+  <input type="number" id="d" placeholder="数値を入力または空欄に">
+
+  <button onclick="calculate()">計算する</button>
+
+  <div class="result" id="result"></div>
+
+  <script>
+    function calculate() {
+      const a = parseFloat(document.getElementById("a").value);
+      const b = parseFloat(document.getElementById("b").value);
+      const c = parseFloat(document.getElementById("c").value);
+      const d = parseFloat(document.getElementById("d").value);
+      const values = [a, b, c, d];
+      const emptyIndexes = values.map((v, i) => isNaN(v) ? i : -1).filter(i => i !== -1);
+      const result = document.getElementById("result");
+
+      if (emptyIndexes.length !== 1) {
+        result.innerHTML = `<span class="error">空欄は1つだけにしてください。</span>`;
+        return;
+      }
+
+      let calculatedValue;
+      switch (emptyIndexes[0]) {
+        case 0: // A = B * C / D
+          if (d === 0) return result.innerHTML = `<span class="error">0で割ることはできません。</span>`;
+          calculatedValue = b * c / d;
+          result.textContent = `A = ${calculatedValue}`;
+          break;
+        case 1: // B = A * D / C
+          if (c === 0) return result.innerHTML = `<span class="error">0で割ることはできません。</span>`;
+          calculatedValue = a * d / c;
+          result.textContent = `B = ${calculatedValue}`;
+          break;
+        case 2: // C = A * D / B
+          if (b === 0) return result.innerHTML = `<span class="error">0で割ることはできません。</span>`;
+          calculatedValue = a * d / b;
+          result.textContent = `C = ${calculatedValue}`;
+          break;
+        case 3: // D = B * C / A
+          if (a === 0) return result.innerHTML = `<span class="error">0で割ることはできません。</span>`;
+          calculatedValue = b * c / a;
+          result.textContent = `D = ${calculatedValue}`;
+          break;
+        default:
+          result.innerHTML = `<span class="error">エラーが発生しました。</span>`;
+      }
+    }
+  </script>
+</body>
+</html>
