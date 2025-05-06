@@ -1,4 +1,4 @@
 # ratiocalculation
 # Pages
-[link](https://koji-yamamoto-github.github.io/ratiocalculation/){:target="_blank"}
+<a href="[URL](https://koji-yamamoto-github.github.io/ratiocalculation/)" target="_blank">リンク</a>	
 
