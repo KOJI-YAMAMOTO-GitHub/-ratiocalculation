@@ -1,3 +1,4 @@
 # ratiocalculation
 # Pages
-https://koji-yamamoto-github.github.io/ratiocalculation/
+[link](https://koji-yamamoto-github.github.io/ratiocalculation/){:target="_blank"}
+
