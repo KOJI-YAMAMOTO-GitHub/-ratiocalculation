@@ -1,3 +1,3 @@
 # ratiocalculation
 # Pages
-https://koji-yamamoto-github.github.io/ratiocalculation/
+https://koji-yamamoto-github.github.io/CalculationOfDiscountedAmount-Ratio/
